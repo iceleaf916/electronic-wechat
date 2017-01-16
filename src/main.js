@@ -2,7 +2,7 @@
 'use strict';
 
 const path = require('path');
-const {app, ipcMain} = require('electron');
+const {app, ipcMain, globalShortcut} = require('electron');
 
 const UpdateHandler = require('./handlers/update');
 const Common = require('./common');
@@ -37,6 +37,23 @@ class ElectronicWeChat {
         AppConfig.saveSettings('prevent-recall', 'on');
         AppConfig.saveSettings('icon', 'black');
       }
+        globalShortcut.register('Command+Alt+Z', () => {
+            if (this.splashWindow.isShown) return;
+            this.wechatWindow.show();
+        });
+        globalShortcut.register('Command+Alt+S', () => {
+            if (this.settingsWindow) {
+                if (this.settingsWindow.isShown){
+                    this.settingsWindow.close();
+                    this.settingsWindow = null;
+                } else {
+                    this.settingsWindow.show();
+                }
+            } else {
+                this.createSettingsWindow();
+                this.settingsWindow.show();
+            }
+        });
     });
 
     app.on('activate', () => {

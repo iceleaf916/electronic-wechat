@@ -5,7 +5,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { app, Menu, nativeImage, Tray } = require('electron');
+const { app, Menu, nativeImage, Tray, ipcRenderer } = require('electron');
 
 const Common = require('../../common');
 
